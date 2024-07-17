@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN_NAME, API_BASE_URL } from '../../constant/Constants';
 
-const Register = ({showError}) => { //{ showError }
+const Register = ({showError, setUserLoggedIn}) => { //{ showError }
     const [state, setState] = useState({ name: '', email: '', password: '', confirmPassword: '', bio: '',successMessage:null });
     const navigate = useNavigate();
 
     const sendDataToServer = async () => {
-        if (state.name.length && state.email.length && state.password && state.confirmPassword && state.bio) {
+        if (state.name.length && state.email.length && state.password && state.confirmPassword) {
             showError(null);
             const payload = {
                 name: state.name,
@@ -24,15 +24,20 @@ const Register = ({showError}) => { //{ showError }
                             ...prevState,
                             successMessage: 'Successfully registered user and redirected to Home page',
                         }));
-                        localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+                        const token = response.data.token;
+                        // console.log('response.data.token',token);
+                        localStorage.setItem(ACCESS_TOKEN_NAME, token);
                         redirectToHome();
+                        setUserLoggedIn(token)
                         showError(null);
                     } else {
                         showError('Failed to Register');
+                        setUserLoggedIn(null)
                     }
                 }).catch(err => {
                     showError('Failed to Register');
-                    console.log(err.message);
+                    setUserLoggedIn(null)
+                    console.log(err);
                 });
         }
     };

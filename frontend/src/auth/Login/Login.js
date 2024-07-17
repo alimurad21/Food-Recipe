@@ -29,9 +29,10 @@ const Login = ({ showError, setUserLoggedIn  }) => {
               ...prevState,
               successMessage: 'Login Successfully and redirect to Home page',
             }));
-            localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+            const token = response.data.token;
+            localStorage.setItem(ACCESS_TOKEN_NAME, token);
             redirectToHome();
-            setUserLoggedIn (response.data.token)
+            setUserLoggedIn(token)
             showError(null);
           } else {
             showError('Invalid Credential');

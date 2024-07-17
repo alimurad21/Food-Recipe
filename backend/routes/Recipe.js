@@ -12,6 +12,7 @@ recipeRouters.post('/add', verifyToken, async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
         
+        // console.log(req.user)
         let recipe = new Recipe({
             user: req.user.user.id,
             title,
@@ -21,28 +22,45 @@ recipeRouters.post('/add', verifyToken, async (req, res) => {
             cuisine,
             image
         });
-
+        // console.log(recipe)
         const savedRecipe = await recipe.save();
-        console.log(savedRecipe);
+        // console.log(savedRecipe);
         res.status(200).json(savedRecipe);
     } catch (err) {
         res.status(500).json({ error: err.message });
-        console.log(err)
+        // console.log(err)
     }
 });
 
 // Get all recipes for the logged-in user
 recipeRouters.get('/', verifyToken, async (req, res) => {
     try {
-        console.log('1.')
+        // console.log('1.')
         const recipes = await Recipe.find({});//{ user: req.user.id }
         if(!recipes){
             res.status(400).json({message:"Recipes not found"})
         }
-        console.log('2. ',recipes)
+        // console.log('2. ',recipes)
         res.status(200).json(recipes);
     } catch (err) {
-        console.log(err.message)
+        // console.log(err.message)
+        res.status(500).json({ error: err.message });
+    }
+});
+
+//Get recipe by id for the loggen in user
+recipeRouters.get('/:id', verifyToken, async (req, res) => {
+    try {
+        // console.log('1.')
+        const recipe = await Recipe.findById(req.params.id);//{ user: req.user.id }
+        // console.log("2. recipe:", recipe)
+        if(!recipe){
+            res.status(400).json({message:"Recipes not found"})
+        }
+        // console.log('2. ',recipe)
+        res.status(200).json(recipe);
+    } catch (err) {
+        // console.log(err.message)
         res.status(500).json({ error: err.message });
     }
 });
@@ -50,6 +68,15 @@ recipeRouters.get('/', verifyToken, async (req, res) => {
 // Update a recipe
 recipeRouters.put('/update/:id', verifyToken, async (req, res) => {
     try {
+        const recipe = await Recipe.findById(req.params.id);
+        if (!recipe) {
+            return res.status(404).json({ error: 'Recipe not found' });
+        }
+
+        if (recipe.user.toString() !== req.user.user.id) {
+            return res.status(403).json({ error: 'You are not authorized to update this recipe' });
+        }
+
         const updatedRecipe = await Recipe.findByIdAndUpdate(
             req.params.id,
             req.body,

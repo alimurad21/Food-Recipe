@@ -1,10 +1,10 @@
 import React from 'react'
 import Register from '../auth/Register/Register.js'
 
-const RegisterPage = ({showError, userLoggedIn}) => {
+const RegisterPage = ({showError, setUserLoggedIn}) => {
   return (
     <>
-        <Register showError={showError} userLoggedIn={userLoggedIn}/>
+        <Register showError={showError} setUserLoggedIn={setUserLoggedIn}/>
     </>
   )
 }

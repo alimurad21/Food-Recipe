@@ -3,7 +3,7 @@ import Recipes from '../components/Recipes/Recipes';
 
 const Home = () => {
   return (
-    <div>
+    <div className='flex justify-center'>
       <Recipes/>
       
     </div>

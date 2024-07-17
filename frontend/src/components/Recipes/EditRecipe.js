@@ -88,37 +88,33 @@ const EditRecipe = ({ userLoggedIn }) => {
                 <h1 className="text-2xl font-semibold text-center text-gray-800">Edit Recipe</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <label className="block text-sm font-medium text-gray-700">
-                        Title
                         <input
                             name='title'
-                            placeholder='Enter title of recipe'
+                            placeholder='Edit title of recipe'
                             value={state.title}
                             onChange={handleChange}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                         />
                     </label>
                     <label className="block text-sm font-medium text-gray-700">
-                        Ingredients
                         <input
                             name='ingredient'
-                            placeholder='Enter ingredients'
+                            placeholder='Edit ingredients'
                             value={state.ingredient}
                             onChange={handleChange}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                         />
                     </label>
                     <label className="block text-sm font-medium text-gray-700">
-                        Preparation Time
                         <input
                             name='prep_time'
-                            placeholder='Preparation time'
+                            placeholder='Edit Preparation time'
                             value={state.prep_time}
                             onChange={handleChange}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                         />
                     </label>
                     <label className="block text-sm font-medium text-gray-700">
-                        Cuisine
                         <input
                             name='cuisine'
                             placeholder='Cuisine'
@@ -128,7 +124,6 @@ const EditRecipe = ({ userLoggedIn }) => {
                         />
                     </label>
                     <label className="block text-sm font-medium text-gray-700">
-                        Image
                         <input
                             name='image'
                             placeholder='Upload Image'

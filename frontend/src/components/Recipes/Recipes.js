@@ -10,7 +10,7 @@ const Recipes = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem(ACCESS_TOKEN_NAME);
-
+  
   useEffect(() => {
     const fetchRecipe = async () => {
       await axios
@@ -20,7 +20,7 @@ const Recipes = () => {
         .then((response) => {
           if (response.status === 200) {
             setShowMessage("Loading Recipes...");
-            console.log(response.data);
+            // console.log(response.data);
             setRecipes(response.data);
           }
           setShowMessage("Failed to load recipes");
@@ -38,29 +38,37 @@ const Recipes = () => {
   };
 
   return (
-    <div className="ml-auto flex items-center">
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
-        onClick={handleAddRecipe}
-      >
-        Add Recipe
-      </button>
-      {Array.isArray(recipes) && recipes.length > 0 ? (
-        recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe._id}
-            user={recipe.user}
-            title={recipe.title}
-            ingredient={recipe.ingredient}
-            instruction={recipe.instruction}
-            prep_time={recipe.prep_time}
-            cuisine={recipe.cuisine}
-            image={recipe.image}
-          />
-        ))
-      ) : (
-        <p>No recipes found</p>
-      )}
+    <div className="container p-4  mt-8">
+      <div className="flex justify-end mb-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleAddRecipe}
+        >
+          Add Recipe
+        </button>
+      </div>
+      <div className="flex justify-start text-3xl ">
+        <h1 className="font-bold">Popular Recipes</h1>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {Array.isArray(recipes) && recipes.length > 0 ? (
+          recipes.map((recipe) => (
+            <RecipeCard
+              key={recipe._id}
+              id = {recipe._id}
+              user={recipe.user}
+              title={recipe.title}
+              // ingredient={recipe.ingredient}
+              // instruction={recipe.instruction}
+              // prep_time={recipe.prep_time}
+              // cuisine={recipe.cuisine}
+              image={recipe.image}
+            />
+          ))
+        ) : (
+          <p className="text-center">No recipes found</p>
+        )}
+      </div>
     </div>
   );
 };
