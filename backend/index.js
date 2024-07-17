@@ -9,6 +9,10 @@ const recipeRouters = require('./routes/Recipe.js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.get('/', (req, res) => {
+    res.send('Welcome to Food Hub');
+});
+
 // Connect to MongoDB
 connectToMongoDB(process.env.MONGODB_URL);
 
@@ -30,9 +34,7 @@ app.use(bodyParser.json())
 app.use('/api/user', userRoutes);
 app.use('/api/recipe', recipeRouters);
 
-app.get('/', (req, res) => {
-    res.send('Welcome to Food Hub');
-});
+
 
 // Start server
 app.listen(PORT, (error) => {
