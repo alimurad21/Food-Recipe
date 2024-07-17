@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 app.use('/api/user', userRoutes);
 app.use('/api/recipe', recipeRouters);
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Welcome to Food Hub');
 });
 
